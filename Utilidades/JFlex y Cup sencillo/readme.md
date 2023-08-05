@@ -24,15 +24,15 @@ Al lado izquierdo de nuestro IDE encontraremos nuestro proyecto. Buscaremos la c
 
 Luego utilizaremos la opción Add JAR/Folder
 
-![](./img/agregar_lib1.PNG)
+![](./img/agregar_lib1.png)
 
 Buscamos en nuestra computadora la carpeta donde se encuentran los .jar de las librerías.
 
-![](./img/agregar_lib2.PNG)
+![](./img/agregar_lib2.png)
 
 Si todo esta correctamente ahora en la carpeta Libraries te deberían aparecer los tres .jar
 
-![](./img/agregar_lib3.PNG)
+![](./img/agregar_lib3.png)
 
 ## 4. Crear Archivos de Configuracion
 
@@ -86,3 +86,4 @@ public static void main(String[] args) {
 
 ### NOTA: 
 EL analizador es un ejemplo Sencillo para reconocer **UN NUMERO ENTERO**.
+
