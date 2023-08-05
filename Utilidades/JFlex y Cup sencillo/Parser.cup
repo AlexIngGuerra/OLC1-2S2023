@@ -1,0 +1,56 @@
+// ------------  Paquetes e importaciones ------------
+package analizador;
+
+import java_cup.runtime.*;
+import java.util.LinkedList;
+
+
+//------> Codigo para el parser
+//------> Declaracion de variables, funciones y funciones de error
+
+parser code 
+{:
+    public String resultado = ""; //Variable para mostrar en consola
+    public static LinkedList<Object> instrucciones; //Lista con instrucciones a ejecutar
+
+
+    public void syntax_error(Symbol s)
+    {
+            System.err.println("Identificador "+ s.value + " no reconocido. Se ha recuperado del error." );
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {
+            System.err.println("Identificador " +s.value + " no reconocido.");
+    }
+
+:}
+
+
+//------> Codigo para las acciones gramaticales (no tocar)
+action code
+{:  :}
+
+
+//------> Declaración de terminales
+terminal String PARENTESIS_A, PARENTESIS_C;
+terminal String PRINT;
+terminal String ENTERO;
+
+
+//------> Declaración de no terminales
+non terminal inicio;
+non terminal instruccion;
+
+
+
+// ------------  GRAMATICA  ------------
+
+start with inicio; //Simbolo inicial
+
+
+inicio ::= instruccion
+;
+
+instruccion ::= ENTERO:val {: System.out.println(val); :}
+;
