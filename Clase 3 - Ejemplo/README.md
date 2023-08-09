@@ -50,10 +50,10 @@ expresion ::= expresion + expresion
 
 
 
-## Árbol de Analisis Sintáctico
+## Árbol de Análisis Sintáctico
 ### Entrada: 
 ```
 MOSTRAR ( 2*7+3 );
 ```
-### Árbol de Análisis Sinátcico resultante:
+### Árbol de Análisis Sintáctico Resultante:
 ![](./Arbol.png)
