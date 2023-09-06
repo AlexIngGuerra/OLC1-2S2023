@@ -1,0 +1,109 @@
+// ------------  Paquete e importaciones ------------
+package statpy;
+
+import java_cup.runtime.*;
+import java.util.LinkedList;
+
+
+//------> Codigo para el parser
+//------> Declaracion de variables, funciones y funciones de error
+
+parser code 
+{:
+    public static String resultado = ""; 
+
+    public void syntax_error(Symbol s)
+    {
+            System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Recuperado" );
+    }
+
+    public void unrecovered_syntax_error(Symbol s) throws java.lang.Exception
+    {
+            System.err.println("Error Sintactico: "+ s.value + " - Fila: " + s.right + " - Columna: " + s.left + ". Sin recuperacion." );
+    }
+
+:}
+
+
+//------> Codigo para las acciones gramaticales (no tocar)
+action code
+{:  :}
+
+
+//------> Declaración de terminales
+terminal String ENTERO;
+terminal String POR, MAS;
+terminal String PARENTESIS_A, PARENTESIS_C, LLAVE_A, LLAVE_C;
+terminal String MOSTRAR, IF;
+terminal String PUNTOYCOMA;
+
+//------> Declaración de no terminales
+non terminal inicio;
+non terminal LinkedList lista_instr;
+non terminal instruccion;
+non terminal expresion;
+non terminal instr_mostrar, if;
+
+// ------> Precedencia
+precedence left MAS;
+precedence left POR;
+
+//------> Definir Simbolo Inicial
+start with inicio; 
+
+
+// ------------>  Producciones  <------------
+
+inicio ::= lista_instr:lista {: func.Funcion.traduccion = lista; :}
+;
+
+
+
+lista_instr ::= lista_instr:lista instruccion:val
+        {: 
+            lista.addAll((LinkedList) val);
+            RESULT = (LinkedList) lista;
+        :}
+
+    | instruccion:val
+        {: 
+            LinkedList<String> lista = new LinkedList<>();
+            lista.addAll((LinkedList) val);
+            RESULT = (LinkedList) lista;
+        :}
+;
+
+
+
+instruccion ::= instr_mostrar:val {: RESULT = val; :}
+    | if:val    {: RESULT = val; :}
+    | while:val    {: RESULT = val; :}
+;
+
+
+
+if ::= IF PARENTESIS_A expresion:exp PARENTESIS_C LLAVE_A lista_instr:inst LLAVE_C 
+    {:
+        LinkedList<String> lista = new LinkedList<>();
+        lista.add("if "+ exp + ":");
+
+        func.Funcion.contador++;
+        lista.addAll(func.Funcion.tabulaciones(inst));
+        func.Funcion.contador--;
+
+        RESULT = lista;
+    :}
+;
+
+instr_mostrar ::= MOSTRAR PARENTESIS_A expresion:val PARENTESIS_C PUNTOYCOMA   
+            {: 
+                LinkedList<String> lista = new LinkedList<>();
+                lista.add("print("+val+")"); 
+                RESULT = lista;
+            :}
+;
+
+expresion ::= expresion:a POR expresion:b  {: RESULT = "MUL("+a.toString()+", "+b.toString()+")" ; :}
+    | expresion:a MAS expresion:b          {: RESULT = "SUM("+a.toString()+", "+b.toString()+")" ; :}
+    | ENTERO:val                           {: RESULT = val; :}
+;
