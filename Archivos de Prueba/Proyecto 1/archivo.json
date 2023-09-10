@@ -1,0 +1,11 @@
+// Comentario Simple
+/* Comentario
+Multilinea*/
+
+{
+	"titulo":"Reporte 1",
+	"ejex1":"Reprobado",
+	"ejex2":"Aprobado",
+	"val1": 60.0,
+	"val2": 61.0
+}
